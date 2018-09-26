@@ -23,6 +23,9 @@ class Home extends Component {
       body:this.state.body
     }
     this.props.addPost(object)
+    this.setState({
+      body:''
+    })
   }
 
   handleChanges = (e) => {
@@ -35,7 +38,10 @@ class Home extends Component {
     console.log(this.props.posts,'@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
     const params = this.props.match.params.id_match;
     const { posts } = this.props;
-    console.log(posts,'ADASDASDASDASDASDASDASDDSDDASD')
+    console.log(posts.length,'ADASDASDASDASDASDASDASDDSDDASD')
+
+
+
     const postList = posts.length ? (
       posts.map( (post) => {
         return (
@@ -60,7 +66,7 @@ class Home extends Component {
           {postList}
           <form className="center" onSubmit={this.submitPost}>
             <div className="input-field col s6">
-              <input className="validate" type="text" onChange={this.handleChanges} />
+              <input className="validate" type="text" onChange={this.handleChanges} value={this.state.body}/>
             </div>
           </form>
         </div>

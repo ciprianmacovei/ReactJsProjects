@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import { deletePost } from '../actions/postActions.js';
 
 class Posts extends Component{
 
@@ -56,7 +56,7 @@ const mapStateToProps = (state,ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    delete: (id) => { dispatch( {type:'DELETE_POST', id} ) }
+    delete: (id) => { dispatch(deletePost(id)) }
   }
 }
 

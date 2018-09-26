@@ -30,15 +30,16 @@ const rootReducer = (state = initState , action) => {
   }
 
   if (action.type == 'ADD_POST'){
-    let newState = {
-      posts:[...state.posts,action.post]
-    }
+    let newState = [...state.posts,action.post]
+
     console.log('uite aici ', newState)
     return {
       ...state,
       posts:newState
     }
   }
+  console.log('ultima chestie',state)
+
 
   return state;
 }
