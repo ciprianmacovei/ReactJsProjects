@@ -1,24 +1,39 @@
 import React , { Component } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+
 
 class Home extends Component {
 
   state = {
-    posts: []
+    body:''
   }
 
-  componentDidMount(){
 
-    axios.get('https://jsonplaceholder.typicode.com/posts').then( (res) =>
-    this.setState({
-      posts:res.data.slice(0,10)
-    })
-    )
+  submitPost = (e) => {
+    e.preventDefault();
+    console.log(this.props,'hai ca se poate')
+    let title = 'asdasd'
+    let body = this.handleChanges
+    let id = this.props.posts.length + 1;
+
+    let object = {
+      id:id,
+      title:title,
+      body:this.state.body
+    }
+    this.props.addPost(object)
   }
+
+  handleChanges = (e) => {
+      this.setState({
+        body:e.target.value
+      })
+  }
+
   render(){
     const params = this.props.match.params.id_match;
-    const { posts } = this.state;
+    const { posts } = this.props;
     const postList = posts.length ? (
       posts.map( (post) => {
         return (
@@ -41,9 +56,29 @@ class Home extends Component {
         <div className="container">
         and the router params are {params}
           {postList}
+          <form className="center" onSubmit={this.submitPost}>
+            <div className="input-field col s6">
+              <input className="validate" type="text" onChange={this.handleChanges} />
+            </div>
+          </form>
         </div>
     )
   }
 }
 
-export default Home;
+
+
+const mapStateToProps = (state) => {
+  return {
+    posts:state.posts
+  }
+}
+
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addPost: (post) => { dispatch({type:'ADD_POST',post:post})}
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Home);

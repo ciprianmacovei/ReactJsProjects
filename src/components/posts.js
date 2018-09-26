@@ -1,36 +1,33 @@
 import React, {Component} from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
-
+import { connect } from 'react-redux';
 
 
 class Posts extends Component{
 
-  state = {
-    posts:[]
-  }
 
-  componentDidMount(){
-    const id = this.props.match.params.id_match;
-    axios.get('https://jsonplaceholder.typicode.com/posts/' + id).then( (res) => {
-      console.log(res)
-      this.setState({
-        posts:res.data
-      })
-    })
-
-
+  handleClick = () => {
+    console.log('asdas',this.props.post.id)
+    this.props.delete(this.props.post.id);
+    this.props.history.push('/');
   }
 
   render(){
-    const { posts } = this.state
-    const postList = posts ? (
+    const post = this.props.post
+    console.log('ciprian',this.props)
+    const postList = post ? (
 
-        <div className="card blue-grey darken-1" key={posts.id}>
-          <Link to={'/posts/'+posts.id}>
-          <span className="card-title">{posts.title}</span>
-          </Link>
-          <p>{posts.body}</p>
+        <div className="card blue-grey darken-1" key={post.id}>
+
+            <Link to={'/posts/'+post.id}>
+            <span className="card-title">{post.title}</span>
+            </Link>
+            <p>{post.body}</p>
+
+            <div className="center">
+              <button onClick={this.handleClick} className="btn grey">Delete</button>
+            </div>
+
         </div>
       )
     : (
@@ -49,5 +46,19 @@ class Posts extends Component{
 
 }
 
+const mapStateToProps = (state,ownProps) => {
+  let id = ownProps.match.params.id_match
+  id = Number(id);
+  return {
+    post:state.posts.find( post => post.id === id)
+  }
+}
 
-export default Posts
+const mapDispatchToProps = (dispatch) => {
+  return {
+    delete: (id) => { dispatch( {type:'DELETE_POST', id} ) }
+  }
+}
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Posts)

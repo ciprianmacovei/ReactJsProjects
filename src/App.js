@@ -5,16 +5,12 @@ import Home from './components/home.js';
 import About from './components/about.js';
 import Contact from './components/contact.js';
 import Posts from './components/posts.js';
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import rootReducer from './reducers/rootReducer';
 
-const store = createStore(rootReducer)
+
 
 class App extends Component {
   render() {
     return (
-      <Provider store={store}>
       <BrowserRouter>
       <div className="App">
         <Navbar/>
@@ -26,7 +22,6 @@ class App extends Component {
         </Switch>
       </div>
       </BrowserRouter>
-      </Provider>
     );
   }
 }
