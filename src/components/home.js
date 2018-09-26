@@ -32,8 +32,10 @@ class Home extends Component {
   }
 
   render(){
+    console.log(this.props.posts,'@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
     const params = this.props.match.params.id_match;
     const { posts } = this.props;
+    console.log(posts,'ADASDASDASDASDASDASDASDDSDDASD')
     const postList = posts.length ? (
       posts.map( (post) => {
         return (
